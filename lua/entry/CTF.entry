@@ -1,0 +1,7 @@
+modEntry = [[
+Client: lua/CTF_Client.lua,
+Server: lua/CTF_Server.lua,
+Predict: lua/CTF_Predict.lua,
+Shared: lua/CTF_Shared.lua,
+Priority: 5
+]]

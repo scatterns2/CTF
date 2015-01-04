@@ -1,0 +1,54 @@
+Script.Load("lua/AlienTeam.lua")
+
+local orig_AlienTeam_InitTechTree = AlienTeam.InitTechTree
+function AlienTeam:InitTechTree()
+
+    local orig_PlayingTeam_InitTechTree = PlayingTeam.InitTechTree
+    PlayingTeam.InitTechTree = function() end
+    
+    orig_PlayingTeam_InitTechTree(self)
+    
+    local orig_TechTree_SetComplete = self.techTree.SetComplete
+    self.techTree.SetComplete = function() end
+    
+    orig_AlienTeam_InitTechTree(self)
+    
+    self.techTree.SetComplete = orig_TechTree_SetComplete
+    
+    // Tier 1 Abilities
+    self.techTree:AddUpgradeNode(kTechId.Leap,              kTechId.None, kTechId.None) 
+    self.techTree:AddUpgradeNode(kTechId.Xenocide,          kTechId.None, kTechId.None)
+    
+    // gorge researches
+    self.techTree:AddBuyNode(kTechId.BabblerAbility,        kTechId.None)
+    self.techTree:AddBuyNode(kTechId.BabblerEgg,                kTechId.None)
+    self.techTree:AddUpgradeNode(kTechId.Web,                   kTechId.None, kTechId.None)
+    self.techTree:AddBuyNode(kTechId.Web,        kTechId.None)
+    
+	self.techTree:AddUpgradeNode(kTechId.BileBomb,            kTechId.None,              kTechId.None)
+
+	
+    // lerk researches
+    self.techTree:AddUpgradeNode(kTechId.Umbra,               kTechId.None, kTechId.None) 
+    self.techTree:AddUpgradeNode(kTechId.Spores,              kTechId.None, kTechId.None)
+    
+    // fade researches
+    self.techTree:AddUpgradeNode(kTechId.MetabolizeEnergy,        kTechId.None, kTechId.None) 
+    self.techTree:AddUpgradeNode(kTechId.MetabolizeHealth,            kTechId.None, kTechId.None)
+    self.techTree:AddUpgradeNode(kTechId.Stab,              kTechId.None, kTechId.None)
+    
+    // onos researches
+	self.techTree:AddUpgradeNode(kTechId.Charge,        kTechId.None, kTechId.None)
+    self.techTree:AddUpgradeNode(kTechId.BoneShield,        kTechId.None, kTechId.None)
+    self.techTree:AddUpgradeNode(kTechId.Stomp,             kTechId.None, kTechId.None)      
+
+    // gorge structures
+    self.techTree:AddBuildNode(kTechId.GorgeTunnel)
+    self.techTree:AddBuildNode(kTechId.Hydra)
+    self.techTree:AddBuildNode(kTechId.Clog)   
+    
+    self.techTree:SetComplete()
+    
+    PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree
+    
+end
